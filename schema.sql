@@ -11,7 +11,7 @@ USE employeeTracker;
 
 CREATE TABLE department(
   id INT PRIMARY KEY,
-  name VARCHAR(30) NULL,
+  dept_name VARCHAR(30) NULL,
   
 );
 CREATE TABLE roles(
