@@ -10,24 +10,24 @@ CREATE DATABASE employeeTracker;
 USE employeeTracker;
 
 CREATE TABLE department(
-  id INT ,
-  dept_name VARCHAR(30) NULL,
+  id INT NOT NULL AUTO_INCREMENT,
+  dept_name VARCHAR(30) NOT NULL,
   PRIMARY KEY(id)
 );
 CREATE TABLE roles(
-    id INT ,
-    title VARCHAR(30),
-    salary DECIMAL,
-    department_id INT,
+    id INT NOT NULL AUTO_INCREMENT,
+    title VARCHAR(30) NOT NULL,
+    salary DECIMAL NOT NULL,
+    department_id INT NOT NULL,
     PRIMARY KEY(id)
 );
 
 CREATE TABLE employee(
-    id INT ,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    role_id INT,
-    manager_id INT,
+    id INT NOT NULL AUTO_INCREMENT,
+    first_name VARCHAR(30) NOT NULL,
+    last_name VARCHAR(30) NOT NULL,
+    role_id INT NOT NULL,
+    manager_id INT NOT NULL,
     PRIMARY KEY(id)
 );
 SET GLOBAL local_infile=1;
