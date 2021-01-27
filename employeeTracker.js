@@ -18,9 +18,45 @@ connection.connect(function(err) {
   });
 
 //   * Add departments, roles, employees
+const Add = () => {
+    inquirer.promt([
+        {
+        type: "list",
+        name: "start",
+        message: "What would you like to do?",
+        choices:[
+            {
+                name:"Add Departments",
+                value: addDepartment
+              },
+              {
+                name:"Add Roles",
+                value: addRoles
+              },
+              {
+                name:"Add Employees",
+                value: addEmployee
+              },
+              {
+                name:"Exit",
+                value: exit
+              }
+        ],
 
+        }
+    ])
+    .then(function (value) {
+        if (value.addDepartment){
+            addDepartment();
+        } else if (value.addRoles){
+            addRoles();
+        } else if (value.addEmployee){
+            addEmployee();
+        }else (value.exit)
+        })
+}
 //   * View departments, roles, employees
-const startTracker = () => {
+const view = () => {
     inquirer.promt([
         {
         type: "list",
@@ -57,7 +93,6 @@ const startTracker = () => {
         }else (value.exit)
         })
 }
-
 
 
 //   * Update employee roles
