@@ -30,7 +30,8 @@ CREATE TABLE employee(
     manager_id INT NOT NULL,
     PRIMARY KEY(id)
 );
-SET GLOBAL local_infile=1;
+
+--SET GLOBAL local_infile=1;
 -- COPY UP TO HERE^
 -- Stop the CLI you have open using:
 -- quit
