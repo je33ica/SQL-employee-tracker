@@ -1,22 +1,42 @@
 use employeeTracker
 
--- INSERT INTO department (dept_name)
--- VALUES ("managment", "back of house", "front of house ", "HR");
+INSERT INTO department (dept_name)
+VALUES ("managment"), ("back of house"), ("front of house"), ("HR");
 
--- INSERT INTO roles (title, salary, department_id)
--- VALUES 
--- ("Owner", 50000, 1)1, ("Executive chef", 28000,1 )2,
--- ("Head chef", 28000, 2)3, ("Restaurant manager", 25000, 3)4 ,  
---  ("sommelier ",28000, 3)5, ("Bar tender", 18000, 3)6 ,
---  ("HR manager",27000, 4)7,("receptionist",27000, 4)8,
-
-INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
+INSERT INTO roles (title, salary, department_id)
 VALUES 
-(1,"Larri", "Etta", 1, 1), (2,"Corbyn", "Dallas", 2, 1), 
-(3,"Sam", "Wich", 3, 2), (4,"Lila" "Moon", 4, 1), 
-(5,"Chardonay", "White", 5, 4), (6,"Moe", "Jito", 6, 4), 
-(7,"Hugh", "Jass", 7, 4), (8,"Sam", "Sung", 8, 4);
+("Owner", 50000, 1), ("Executive chef", 28000,1 ),
+("Head chef", 28000, 2), ("Restaurant manager", 25000, 3),  
+ ("sommelier ",28000, 3), ("Bar tender", 18000, 3),
+ ("HR manager",27000, 4),("receptionist",27000, 4);
 
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES 
+("Larri", "Etta", 1, 1), ("Corbyn", "Dallas", 2, 1), 
+("Sam", "Wich", 3, 2), ("Lila", "Moon", 4, 1),  
+("Chardonay", "White", 5, 4), ("Moe", "Jito", 6, 4), 
+("Hugh", "Jass", 7, 4), ("Sam", "Sung", 8, 4);
+
+SELECT department.id, dept_name, roles.id, roles.title, roles.salary 
+FROM department JOIN roles ON department.id = roles.department_id
+
+-- INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
+-- VALUES 
+-- (1,"Larri", "Etta", 1, 1), (2,"Corbyn", "Dallas", 2, 1), 
+-- (3,"Sam", "Wich", 3, 2), (4,"Lila" "Moon", 4, 1), 
+-- (5,"Chardonay", "White", 5, 4), (6,"Moe", "Jito", 6, 4), 
+-- (7,"Hugh", "Jass", 7, 4), (8,"Sam", "Sung", 8, 4);
+
+
+
+
+-- show ALL books with authors
+-- INNER JOIN will only return all matching values from both tables
+   
+SELECT * FROM employee;
+SELECT title, firstName, lastName
+FROM books
+INNER JOIN authors ON books.authorId = authors.id;
 
 -- INSERT INTO employee (first_name, last_name, role_id)
 -- VALUES 
