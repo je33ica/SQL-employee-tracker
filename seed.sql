@@ -20,6 +20,15 @@ VALUES
 SELECT department.id, dept_name, roles.id, roles.title, roles.salary 
 FROM department JOIN roles ON department.id = roles.department_id
 
+SELECT roles.id, roles.title, roles.salary, roles.department_id, 
+employee.role_id, employee.manager_id, employee.first_name,
+employee.last_name 
+FROM roles JOIN employee ON roles.id = employee.role_id
+
+SELECT roles.id, roles.title, roles.salary, employee.first_name, 
+employee.last_name, employee.role_id, employee.manager_id 
+FROM roles JOIN employee ON roles.id = employee.role_id;
+
 -- INSERT INTO employee (id, first_name, last_name, role_id, manager_id)
 -- VALUES 
 -- (1,"Larri", "Etta", 1, 1), (2,"Corbyn", "Dallas", 2, 1), 
