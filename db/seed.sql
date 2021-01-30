@@ -1,4 +1,4 @@
-use employeeTracker
+use employeeTracker;
 
 INSERT INTO department (dept_name)
 VALUES ("managment"), ("back of house"), ("front of house"), ("HR");
@@ -12,10 +12,11 @@ VALUES
 
 INSERT INTO employee (first_name, last_name, role_id, manager_id)
 VALUES 
-("Larri", "Etta", 1, 1), ("Corbyn", "Dallas", 2, 1), 
+("Larri", "Etta", 1), ("Corbyn", "Dallas", 2, 1), 
 ("Sam", "Wich", 3, 2), ("Lila", "Moon", 4, 1),  
 ("Chardonay", "White", 5, 4), ("Moe", "Jito", 6, 4), 
 ("Hugh", "Jass", 7, 4), ("Sam", "Sung", 8, 4);
+
 
 --view roles
 SELECT * FROM employeeTracker.roles;
@@ -45,5 +46,5 @@ FROM roles JOIN employee ON roles.id = employee.role_id;
 
 -- title role and department 
 SELECT roles.title, dept_name AS department FROM roles LEFT JOIN department ON roles.department_id=department.id;
---Name and title
+--Name and
 SELECT employee.first_name, employee.last_name, roles.title FROM roles JOIN employee ON roles.id = employee.role_id;
