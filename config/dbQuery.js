@@ -33,14 +33,14 @@ class databaseQueries {
         );
     }
 
-    createEmployee = newemployee => {
+    createEmployee(newemployee){
         return this.connection.query(
-            "INSERT INTO employee SET ?",
-            {
-                first_name: newemployeeName.first,
-                last_name : newemployeeName.last,
-                role_id: newRoleID
-            }
+            "INSERT INTO employee SET ?",newemployee
+            // {
+            //     first_name: newemployeeName.first,
+            //     last_name : newemployeeName.last,
+            //     role_id: newRoleID
+            // }
             );
     }
 

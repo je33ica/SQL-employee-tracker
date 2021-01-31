@@ -138,17 +138,17 @@ async function addEmployee(){
     inquirer.prompt([
         {
             type: "input",
-            name: "first",
+            name: "first_name",
             message: "What is the employee's first name ?",
         },
         {
             type: "input",
-            name: "last",
+            name: "last_name",
             message: "What is the employee's last name ?"
         }
 
     ]);
-    console.log(newemployeeName.first, newemployeeName.last);
+   // console.log(newemployeeName.first, newemployeeName.last);
     
     
     // const { roleId } = await answer ({
@@ -164,7 +164,7 @@ let roles = await database.findAllRoles();
     inquirer.prompt([
         {
             type: "input",
-            name: "ID",
+            name: "role_id",
             message: "What is the employee's role ID number ?",
         },
 
@@ -173,7 +173,8 @@ let roles = await database.findAllRoles();
 const newemployee =  {...newemployeeName,... newRoleID}
 
 
-console.log(newemployee)
+//console.log(newemployee)
+ await database.createEmployee(newemployee);
 //   console.log(newemployee);
 //     await database.createEmployee(newemployee);
 //     console.log(
