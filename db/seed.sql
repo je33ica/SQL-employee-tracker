@@ -17,34 +17,34 @@ VALUES
 ("Chardonay", "White", 5, 4), ("Moe", "Jito", 6, 4), 
 ("Hugh", "Jass", 7, 4), ("Sam", "Sung", 8, 4);
 
+--  Testing MYSQL queries 
+-- --view roles
+-- SELECT * FROM employeeTracker.roles;
+-- SELECT  title FROM roles
 
---view roles
-SELECT * FROM employeeTracker.roles;
-SELECT  title FROM roles
+-- --view departments
+-- SELECT * FROM employeeTracker.department;
+-- SELECT first_name, last_name FROM employee;
 
---view departments
-SELECT * FROM employeeTracker.department;
-SELECT first_name, last_name FROM employee;
+-- SELECT dept_name FROM department
 
-SELECT dept_name FROM department
+-- --view employees
+-- SELECT * FROM employeeTracker.employee;
 
---view employees
-SELECT * FROM employeeTracker.employee;
+-- SELECT department.id, dept_name, roles.id, roles.title, roles.salary 
+-- FROM department JOIN roles ON department.id = roles.department_id
 
-SELECT department.id, dept_name, roles.id, roles.title, roles.salary 
-FROM department JOIN roles ON department.id = roles.department_id
+-- SELECT roles.id, roles.title, roles.salary, roles.department_id, 
+-- employee.role_id, employee.manager_id, employee.first_name,
+-- employee.last_name 
+-- FROM roles JOIN employee ON roles.id = employee.role_id
 
-SELECT roles.id, roles.title, roles.salary, roles.department_id, 
-employee.role_id, employee.manager_id, employee.first_name,
-employee.last_name 
-FROM roles JOIN employee ON roles.id = employee.role_id
+-- --view employees
+-- SELECT roles.id, roles.title, roles.salary, employee.first_name, 
+-- employee.last_name, employee.role_id, employee.manager_id 
+-- FROM roles JOIN employee ON roles.id = employee.role_id;
 
---view employees
-SELECT roles.id, roles.title, roles.salary, employee.first_name, 
-employee.last_name, employee.role_id, employee.manager_id 
-FROM roles JOIN employee ON roles.id = employee.role_id;
-
--- title role and department 
-SELECT roles.title, dept_name AS department FROM roles LEFT JOIN department ON roles.department_id=department.id;
---Name and
-SELECT employee.first_name, employee.last_name, roles.title FROM roles JOIN employee ON roles.id = employee.role_id;
+-- -- title role and department 
+-- SELECT roles.title, dept_name AS department FROM roles LEFT JOIN department ON roles.department_id=department.id;
+-- --Name and
+-- SELECT employee.first_name, employee.last_name, roles.title FROM roles JOIN employee ON roles.id = employee.role_id;
