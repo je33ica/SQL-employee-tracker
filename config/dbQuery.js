@@ -1,15 +1,22 @@
 var connection = require("./connection.js");
-/*
-const cTable = require('console.table');
 
-const chalk = require('chalk');
-const figlet = require('figlet');
-*/
 class databaseQueries {
     constructor(connection){
         this.connection = connection;
     }
-
+ findAllDepartments(){
+        return this.connection.query(
+           " SELECT id, dept_name FROM department"
+           
+            )
+        
+    };
+    findAllRoles(){
+        return this.connection.query(
+            "SELECT id, title FROM roles"
+            )
+        
+    };
     findAllEmployees(){
         return this.connection.query(
           //  "SELECT * FROM employeeTracker.employee"
@@ -18,19 +25,32 @@ class databaseQueries {
             )
            // console.table("these are the employees", result);
     };
-    findAllDepartments(){
+
+    //find all managers
+    findAllMgrs(employeeId){
         return this.connection.query(
-           " SELECT dept_name FROM department"
            
-            )
-        
-    };
-    findAllRoles(){
+        );
+    }
+
+    createEmployee = newemployee => {
         return this.connection.query(
-            "SELECT title FROM roles"
-            )
-        
-    };
+            "INSERT INTO employee SET ?",
+            {
+                first_name: newemployeeName.first,
+                last_name : newemployeeName.last,
+                role_id: newRoleID
+            }
+            );
+    }
+
+    // addDepartment(){
+    //     console.log(deptToAdd);
+    //     return this.connection.query("INSERT INTO department SET ?", department);
+       
+    // }
+   
+    
 
     // async function viewDepartments(){
     //     //  console.log()

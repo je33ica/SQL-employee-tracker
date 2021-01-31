@@ -1,103 +1,103 @@
 const database = require("./config/dbQuery.js");
 const inquirer = require("inquirer");
-require("console.table")
+require("console.table");
 
-const chalk = require('chalk');
-const figlet = require('figlet');
-
+const chalk = require("chalk");
+const figlet = require("figlet");
 
 //run this first then trigger first questions
 function initialiseApplication() {
-    
     bigBanner();
 }
 const bigBanner = function () {
-    figlet.text('Employee', {
-        font: 'ANSI Regular',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
-    }, function (err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        };
-        console.log(chalk.blue(data));
-    });
-    figlet.text('Tracker', {
-        font: 'ANSI Regular',
-        horizontalLayout: 'default',
-        verticalLayout: 'default'
-    }, function (err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        };
-        console.log(chalk.green(data));
+    figlet.text(
+        "Employee",
+        {
+            font: "ANSI Regular",
+            horizontalLayout: "default",
+            verticalLayout: "default",
+        },
+        function (err, data) {
+            if (err) {
+                console.log("Something went wrong...");
+                console.dir(err);
+                return;
+            }
+            console.log(chalk.blue(data));
+        }
+    );
+    figlet.text(
+        "Tracker",
+        {
+            font: "ANSI Regular",
+            horizontalLayout: "default",
+            verticalLayout: "default",
+        },
+        function (err, data) {
+            if (err) {
+                console.log("Something went wrong...");
+                console.dir(err);
+                return;
+            }
+            console.log(chalk.green(data));
 
-        firstQuestions();
-    });
+            firstQuestions();
+        }
+    );
 };
-
-
 
 async function firstQuestions() {
-    const { answer } = await inquirer
-        .prompt([
-            {
-                type: "list",
-                name: "answer",
-                message: "What would you like to do?",
-                choices: [
-                    {
-                        name: "Add to a department?",
-                        value: "addDept",
-                    },
-                    {
-                        name: "Add a role ?",
-                        value: "addRole",
-                    },
-                    {
-                        name: "Add an Employee?",
-                        value: "addEmployee",
-                    },
-                    {
-                        name: "View departments?",
-                        value: "view_dept",
-                    },
-                    {
-                        name: "View roles",
-                        value: "view_roles",
-                    },
-                    {
-                        name: "View Employees",
-                        value: "view_employees"
-                    }
-                ],
-            },
-        ])
-    console.log(answer)
+    const { answer } = await inquirer.prompt([
+        {
+            type: "list",
+            name: "answer",
+            message: "What would you like to do?",
+            choices: [
+                "View departments",
+
+                "View all roles",
+
+                "View all employees",
+
+                "View all employees by managers",
+
+                "Add to a department",
+
+                "Add a role",
+
+                "Add an Employee",
+            ],
+        },
+    ]);
+    console.log(answer);
     switch (answer) {
-        case "addDept":
-            return addDepartment();
-        case "addRole":
-            return addRole();
-        case "addEmployee":
-            return addEmployee();
-        case "view_dept":
+        case "View departments":
             return viewDepartments();
-        case "view_roles":
+        case "View all roles":
             return viewRoles();
-        case "view_employees":
+        case "View all employees":
             return viewEmployees();
+        case "View all employees by managers":
+            return viewEmployeesByManager();
+        case "Add to a department":
+            return addDepartment();
+        case "Add a role":
+            return addRole();
+        case "Add an Employee":
+            return addEmployee();
+        // case "view_dept":
+        //     return viewDepartments();
+        // case "view_roles":
+        //     return viewRoles();
+        // case "view_employees":
+        //     return viewEmployees();
     }
-};
+}
 
 // async function addDepartment() {
 //     //  console.log()
 //     const allEmployees = await database.();
-//     // console.log(allEmployees); 
+//     // console.log(allEmployees);
 //     console.table(allEmployees);
 //     firstQuestions();
 // }
@@ -106,27 +106,108 @@ async function firstQuestions() {
 async function viewDepartments() {
     //  console.log()
     const allDepartments = await database.findAllDepartments();
-    // console.log(allEmployees); 
+    // console.log(allEmployees);
     console.table(allDepartments);
     firstQuestions();
 }
 async function viewRoles() {
     //  console.log()
     const allRoles = await database.findAllRoles();
-    // console.log(allEmployees); 
+    // console.log(allEmployees);
     console.table(allRoles);
     firstQuestions();
 }
 async function viewEmployees() {
     //  console.log()
-    const allEmployees = await database.findAllEmployees();
-    // console.log(allEmployees); 
+    const allEmployees = await database.findAllRoles();
+    // console.log(allEmployees);
     console.table(allEmployees);
     firstQuestions();
 }
+async function viewEmployeesByManager() {
+    //get all the managers
+    const managers = await database.findAllEmployees();
+
+    firstQuestions();
+}
+
+async function addEmployee(){
 
 
-c
+    const newemployeeName = await
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "first",
+            message: "What is the employee's first name ?",
+        },
+        {
+            type: "input",
+            name: "last",
+            message: "What is the employee's last name ?"
+        }
+
+    ]);
+    console.log(newemployeeName.first, newemployeeName.last);
+    
+    
+    // const { roleId } = await answer ({
+    //     type: 'list',
+    //     name: 'roleId',
+    //     message: 'What is the employees role?',
+    //     choices: roleChoice
+    // });
+    // console.log();
+let roles = await database.findAllRoles();
+    console.table(roles );
+    const newRoleID = await
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "ID",
+            message: "What is the employee's role ID number ?",
+        },
+
+    ]);
+   
+const newemployee =  {...newemployeeName,... newRoleID}
+
+
+console.log(newemployee)
+//   console.log(newemployee);
+//     await database.createEmployee(newemployee);
+//     console.log(
+//         `Added ${newemployee.first_name} ${newemployee.last_name} to the database`
+//  );
+    }
+//     const addEmployee = await database.addEmployee();
+//     console.log (addEmployee);
+//     firstQuestions();
+// }
+// async function addDepartment() {
+//     inquirer.prompt({
+//         type: "input",
+//         name: "departmentName",
+//         message: "What's the name of the Department",
+
+//     })
+//     const deptToadd = answer.deparmentName
+//     console.log( deptToadd)
+// const addDept = await database.addDepartment(deptToadd);
+//     // .then(function(answer){
+//     //     var sql = "insert into department set ?";
+//     //     connection.query(sql, {
+//     //         name: answer.departmentName
+//     //     }, function(err){
+//     //         if (err) throw err;
+//     //         console.log ("department added");
+//     //         firstQuestions();
+//     //     });
+//     // });
+// }
+
+
+
 /*
 //   * Add departments, roles, employees
 const addDept_roles_employee = () => {
@@ -272,3 +353,47 @@ const viewDept_role_employee = () => {
 firstQuestions();
 */
 initialiseApplication();
+
+// {
+//     name: "View departments?",
+//     value: "view_dept",
+// },
+// {
+//     name: "View all roles",
+//     value: "view_roles",
+// },
+// {
+//     name: "View all employees",
+//     value: "view_employees"
+// },
+// {
+//     name: "View all employees by managers",
+//     value: "view_employees_manager"
+// },
+// {
+//     name: "Add to a department?",
+//     value: "addDept",
+// },
+// {
+//     name: "Add a role ?",
+//     value: "addRole",
+// },
+// {
+//     name: "Add an Employee?",
+//     value: "addEmployee",
+// }
+
+// case "view_dept":
+//     return viewDepartments();
+// case "view_roles":
+//     return viewRoles();
+// case "view_employees":
+//     return viewEmployees();
+// case "view_employees_manager":
+//     return viewEmployeesByManager();
+// case "addDept":
+//     return addDepartment();
+// case "addRole":
+//     return addRole();
+// case "addEmployee":
+//     return addEmployee();
