@@ -52,7 +52,12 @@ class databaseQueries {
             
             );
     }
-
+ 
+    createRole(newRole){
+        return this.connection.query(
+            "INSERT INTO roles SET ?", newRole
+        )
+    }
     // addDepartment(){
     //     console.log(deptToAdd);
     //     return this.connection.query("INSERT INTO department SET ?", department);

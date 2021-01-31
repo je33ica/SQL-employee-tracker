@@ -156,38 +156,38 @@ async function viewEmployees() {
 //     firstQuestions();
 // }
 
-async function addDepartment(){
+async function addDepartment() {
     const newDept = await
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "dept_name",
-            message: "What is the name of the department you would like to create?"
-        }
-    ]);
-    console.log(newDept);
-    await database.createDept(newDept)
-}
-async function addEmployee(){
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "dept_name",
+                message: "What is the name of the department you would like to create?"
+            }
+        ]);
 
+    await database.createDept(newDept)
+    console.log(chalk.green(newDept.dept_name), " has been added to the database ");
+    firstQuestions();
+}
+async function addEmployee() {
 
     const newemployeeName = await
-    inquirer.prompt([
-        {
-            type: "input",
-            name: "first_name",
-            message: "What is the employee's first name ?",
-        },
-        {
-            type: "input",
-            name: "last_name",
-            message: "What is the employee's last name ?"
-        }
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "first_name",
+                message: "What is the employee's first name ?",
+            },
+            {
+                type: "input",
+                name: "last_name",
+                message: "What is the employee's last name ?"
+            }
+        ]);
+    // console.log(newemployeeName.first, newemployeeName.last);
 
-    ]);
-   // console.log(newemployeeName.first, newemployeeName.last);
-    
-    
+
     // const { roleId } = await answer ({
     //     type: 'list',
     //     name: 'roleId',
@@ -195,28 +195,55 @@ async function addEmployee(){
     //     choices: roleChoice
     // });
     // console.log();
-let roles = await database.findAllRoles();
-    console.table(roles );
+    let roles = await database.findAllRoles();
+    console.table(roles);
     const newRoleID = await
-    inquirer.prompt([
+        inquirer.prompt([
+            {
+                type: "input",
+                name: "role_id",
+                message: "What is the employee's role ID number ?",
+            },
+        ]);
+
+    const newemployee = { ...newemployeeName, ...newRoleID }
+    await database.createEmployee(newemployee);
+
+    console.log(chalk.green(newemployee.first_name, newemployee.last_name), "has been added to the database");
+    firstQuestions();
+
+}
+
+async function addRole() {
+
+    const newRoleTitleID = await 
+    inquirer.prompt ([
         {
             type: "input",
-            name: "role_id",
-            message: "What is the employee's role ID number ?",
+            name: "title",
+            message: "What is the title of the role ?",
         },
-    ]);
-
-const newemployee =  {...newemployeeName,... newRoleID}
-
-
-//console.log(newemployee)
- await database.createEmployee(newemployee);
-//   console.log(newemployee);
-//     await database.createEmployee(newemployee);
-//     console.log(
-//         `Added ${newemployee.first_name} ${newemployee.last_name} to the database`
-//  );
-    }
+        {
+            type: "input",
+            name: "salary",
+            message: "What is the salary in GBP per year for the role?",
+        },
+    ])
+ let department = await database.findAllDepartments();
+ console.table(department);
+ const newDeptID = await
+    inquirer.prompt ([
+        {
+            type: "input",
+            name: "department_id",
+            message: "What is the ID of the department this role belongs too ?",
+        }
+    ])
+    const newRole = { ...newRoleTitleID,... newDeptID }
+    await database.createRole(newRole)
+    console.log(chalk.green(newRoleTitleID.title), "has been added to the datbase")
+    firstQuestions();
+}
 //     const addEmployee = await database.addEmployee();
 //     console.log (addEmployee);
 //     firstQuestions();
