@@ -4,6 +4,7 @@ require("console.table");
 
 const chalk = require("chalk");
 const figlet = require("figlet");
+const { findAllEmployees } = require("./config/dbQuery.js");
 
 //run this first then trigger first questions
 function initialiseApplication() {
@@ -20,7 +21,6 @@ const bigBanner = function () {
         function (err, data) {
             if (err) {
                 console.log("Something went wrong...");
-                console.dir(err);
                 return;
             }
             console.log(chalk.blue(data));
@@ -36,7 +36,6 @@ const bigBanner = function () {
         function (err, data) {
             if (err) {
                 console.log("Something went wrong...");
-                console.dir(err);
                 return;
             }
             console.log(chalk.green(data));
@@ -54,18 +53,13 @@ async function firstQuestions() {
             message: "What would you like to do?",
             choices: [
                 "View departments",
-
                 "View all roles",
-
                 "View all employees",
-
                 "View all employees by managers",
-
                 "Add to a department",
-
                 "Add a role",
-
                 "Add an Employee",
+                "Update employee role",
             ],
         },
     ]);
@@ -77,30 +71,19 @@ async function firstQuestions() {
             return viewRoles();
         case "View all employees":
             return viewEmployees();
-        case "View all employees by managers":
-            return viewEmployeesByManager();
+        // case "View all employees by managers":
+        //     return viewEmployeesByManager();
         case "Add to a department":
             return addDepartment();
         case "Add a role":
             return addRole();
         case "Add an Employee":
             return addEmployee();
-        // case "view_dept":
-        //     return viewDepartments();
-        // case "view_roles":
-        //     return viewRoles();
-        // case "view_employees":
-        //     return viewEmployees();
+        case "Update employee role":
+            return updateEmployee()
+        
     }
 }
-
-// async function addDepartment() {
-//     //  console.log()
-//     const allEmployees = await database.();
-//     // console.log(allEmployees);
-//     console.table(allEmployees);
-//     firstQuestions();
-// }
 
 //for viewing data
 async function viewDepartments() {
@@ -116,14 +99,14 @@ async function viewRoles() {
     // console.log(allEmployees);
     console.table(allRoles);
     firstQuestions();
-}
+};
 async function viewEmployees() {
     //  console.log()
     const allEmployees = await database.findAllEmployees();
     // console.log(allEmployees);
     console.table(allEmployees);
     firstQuestions();
-}
+};
 // async function viewEmployeesByManager() {
 //     //get all the managers
 //      const managers = await database.findAllEmployees();
@@ -156,6 +139,9 @@ async function viewEmployees() {
 //     firstQuestions();
 // }
 
+
+
+//functions for adding 
 async function addDepartment() {
     const newDept = await
         inquirer.prompt([
@@ -169,7 +155,7 @@ async function addDepartment() {
     await database.createDept(newDept)
     console.log(chalk.green(newDept.dept_name), " has been added to the database ");
     firstQuestions();
-}
+};
 async function addEmployee() {
 
     const newemployeeName = await
@@ -185,16 +171,7 @@ async function addEmployee() {
                 message: "What is the employee's last name ?"
             }
         ]);
-    // console.log(newemployeeName.first, newemployeeName.last);
 
-
-    // const { roleId } = await answer ({
-    //     type: 'list',
-    //     name: 'roleId',
-    //     message: 'What is the employees role?',
-    //     choices: roleChoice
-    // });
-    // console.log();
     let roles = await database.findAllRoles();
     console.table(roles);
     const newRoleID = await
@@ -212,8 +189,7 @@ async function addEmployee() {
     console.log(chalk.green(newemployee.first_name, newemployee.last_name), "has been added to the database");
     firstQuestions();
 
-}
-
+};
 async function addRole() {
 
     const newRoleTitleID = await 
@@ -243,221 +219,81 @@ async function addRole() {
     await database.createRole(newRole)
     console.log(chalk.green(newRoleTitleID.title), "has been added to the datbase")
     firstQuestions();
-}
-//     const addEmployee = await database.addEmployee();
-//     console.log (addEmployee);
-//     firstQuestions();
-// }
-// async function addDepartment() {
-//     inquirer.prompt({
+};
+
+async function updateEmployee(){
+
+    const allEmployees = await database.findAllEmployees(); 
+    console.table(allEmployees);
+
+    const roleToUpdate = allEmployees.map(({ id, first_name, last_name}) => ({
+        value: id,
+        name: `${first_name} ${last_name}`,
+    }));
+
+    const { employeeID } = await 
+    inquirer.prompt([
+        {
+            type: 'list',
+            name: 'employeeID',
+            message: "Which employee's role do you want to update?",
+            choices: roleToUpdate
+        }
+    ]);
+   const roles = await database.findAllRoles();
+   const roleChoice = roles.map(({ id, title}) => ({
+    value: id,
+    name: title,
+    
+}));
+const { roleID } = await 
+  inquirer.prompt([
+    {
+        type: "list",
+        name: "roleID",
+        message: "Which role do you want to assign the employee?",
+        choices: roleChoice
+    }
+]);
+
+ await database.updateEmployeeRole(employeeID,roleID)
+
+// const whichRole = await
+//    inquirer.prompt([
+//     {
 //         type: "input",
-//         name: "departmentName",
-//         message: "What's the name of the Department",
-
-//     })
-//     const deptToadd = answer.deparmentName
-//     console.log( deptToadd)
-// const addDept = await database.addDepartment(deptToadd);
-//     // .then(function(answer){
-//     //     var sql = "insert into department set ?";
-//     //     connection.query(sql, {
-//     //         name: answer.departmentName
-//     //     }, function(err){
-//     //         if (err) throw err;
-//     //         console.log ("department added");
-//     //         firstQuestions();
-//     //     });
-//     // });
-// }
+//         name: "role",
+//         message: "Please select which role you would like to change?",
+//     },
+// ]);
 
 
 
-/*
-//   * Add departments, roles, employees
-const addDept_roles_employee = () => {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "start",
-        message: "What would you like to do?",
-        choices: [
-          {
-            name: "Add Department",
-            value: addDepartment,
-          },
-          {
-            name: "Add Role",
-            value: addRoles,
-          },
-          {
-            name: "Add Employee",
-            value: addEmployee,
-          },
-          {
-            name: "Exit",
-            value: exit,
-          },
-        ],
-      },
-    ])
-    .then(function (value) {
-      if (value.addDepartment) {
-        addDepartment();
-      } else if (value.addRoles) {
-        addRoles();
-      } else if (value.addEmployee) {
-        addEmployee();
-      } else value.exit;
-    });
-};
+ //  await database.getEmployee(roleToUpdate)
+   //  await database.findAllEmployees(roleToUpdate.)
 
-const addDepartment = () => {
-  inquirer
-    .prompt([
-      {
-        type: "input",
-        name: "createDept",
-        message: "What department would you like create?",
-      },
-      {
-        type: "input",
-        name: "",
-        message: "",
-      },
-    ])
-    .then(function (value) {
-      if (value.addManager) {
-        addManager();
-      } else if (value.addBOH) {
-        addBOH();
-      } else if (value.addFOH) {
-        addFOH();
-      } else if (value.addHR) {
-        addHR();
-      } else value.exit;
-    });
-};
+//    const allEmployees = await database.findAllEmployees();
+//     // console.log(allEmployees);
+//     console.table(allEmployees)
 
-const addRoles = () => {
-  inquirer.prompt([
-    {
-      type: "input",
-      name: "getTitle",
-      message: "What role would you like to create?",
-    },
-    {
-      type: "input",
-      name: "What department would ",
-      message: "What is the salary",
-    },
-    {},
-  ]);
-};
+  // const whatToUpdate = await
+   //     const roleToUpdate = await
+//     inquirer.prompt([
+//         {
+//             type: "input",
+//             name: "ID",
+//             message: "Please select the ID number of the employee who's role you wish to update ?",
+//         },
+//     ]);
+//    console.log(roleToUpdate);
 
-const addManager = () => {
-  inquirer.prompt([
-    {
-      input: "What is department is ",
-    },
-  ]);
-};
-//   * View departments, roles, employees
-const viewDept_role_employee = () => {
-  inquirer
-    .prompt([
-      {
-        type: "list",
-        name: "start",
-        message: "What would you like to do?",
-        choices: [
-          {
-            name: "View Departments",
-            value: displayDepartments,
-          },
-          {
-            name: "View Roles",
-            value: displayRoles,
-          },
-          {
-            name: "View Employees",
-            value: displayEmployees,
-          },
-          {
-            name: "Exit",
-            value: exit,
-          },
-        ],
-      },
-    ])
-    .then(function (value) {
-      if (value.displayDepartments) {
-        displayDepartments();
-      } else if (value.displayRoles) {
-        displayRoles();
-      } else if (value.displayEmployees) {
-        displayEmployees();
-      } else value.exit;
-    });
-};
 
-//   * Update employee roles
 
-// .then(function (answer) {
-//     switch (answer.action) {
-//         case "Add Department":
-//             addDepartment();
-//             break;
-//         case "Add Role":
-//             addRoles();
-//             break;
-//         case "Add Employee":
-//             addEmployee();
-//             break;
-firstQuestions();
-*/
+}
+
+
+
+
+
+
 initialiseApplication();
-
-// {
-//     name: "View departments?",
-//     value: "view_dept",
-// },
-// {
-//     name: "View all roles",
-//     value: "view_roles",
-// },
-// {
-//     name: "View all employees",
-//     value: "view_employees"
-// },
-// {
-//     name: "View all employees by managers",
-//     value: "view_employees_manager"
-// },
-// {
-//     name: "Add to a department?",
-//     value: "addDept",
-// },
-// {
-//     name: "Add a role ?",
-//     value: "addRole",
-// },
-// {
-//     name: "Add an Employee?",
-//     value: "addEmployee",
-// }
-
-// case "view_dept":
-//     return viewDepartments();
-// case "view_roles":
-//     return viewRoles();
-// case "view_employees":
-//     return viewEmployees();
-// case "view_employees_manager":
-//     return viewEmployeesByManager();
-// case "addDept":
-//     return addDepartment();
-// case "addRole":
-//     return addRole();
-// case "addEmployee":
-//     return addEmployee();

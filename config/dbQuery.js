@@ -21,7 +21,7 @@ class databaseQueries {
         return this.connection.query(
           //  "SELECT * FROM employeeTracker.employee"
           //"SELECT employee.id, employee.first_name, employee.last_name FROM employee"
-           "SELECT roles.id, roles.title, roles.salary, employee.first_name, employee.last_name, employee.manager_id FROM roles JOIN employee ON roles.id = employee.role_id"
+           "SELECT employee.id, roles.title, roles.salary, employee.first_name, employee.last_name, employee.manager_id FROM roles JOIN employee ON roles.id = employee.role_id"
             )
            // console.table("these are the employees", result);
     };
@@ -58,6 +58,22 @@ class databaseQueries {
             "INSERT INTO roles SET ?", newRole
         )
     }
+
+    findAllRoles(){
+        return this.connection.query(
+        "SELECT roles.id, roles.title, dept_name AS department, roles.salary FROM roles LEFT JOIN department on roles.department_id = department.id"
+        );
+    }
+
+    updateEmployeeRole(employeeID, roleID) {
+        return this.connection.query(
+            "UPDATE employee SET role_id = ? WHERE id = ?",
+            [employeeID, roleID]
+        );
+    }
+    // getEmployee(roleToUpdate){
+    //     return this.connection.
+    // }
     // addDepartment(){
     //     console.log(deptToAdd);
     //     return this.connection.query("INSERT INTO department SET ?", department);
