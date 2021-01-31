@@ -119,18 +119,55 @@ async function viewRoles() {
 }
 async function viewEmployees() {
     //  console.log()
-    const allEmployees = await database.findAllRoles();
+    const allEmployees = await database.findAllEmployees();
     // console.log(allEmployees);
     console.table(allEmployees);
     firstQuestions();
 }
-async function viewEmployeesByManager() {
-    //get all the managers
-    const managers = await database.findAllEmployees();
+// async function viewEmployeesByManager() {
+//     //get all the managers
+//      const managers = await database.findAllEmployees();
+//      const mgrChoices = managers.map(({ id, first_name, last_name}) => ({
+//         name:  `${first_name} ${last_name}`,
+//         value: id
+//     }));
+//     console.log(mgrChoices);
+// //Ask which manager they want
+//     const { mgrId } = await 
+//     inquirer.prompt([
+//         {
+//             type: 'list',
+//             name: 'mgrId',
+//             message: 'Which employee do you want to see the direct reports for?',
+//             choices: mgrChoices
+//         }
+//     ]);
+// //Search for the managers the return if they have the employees or not
+//     const employees = await database.findAllMgrs(mgrId);
 
-    firstQuestions();
+//     console.log('\n');
+
+//     if (employees.length === 0) {
+//         console.log('The selectd employee has no direct reports');
+//     } else {
+//         console.table(employees);
+//     }
+
+//     firstQuestions();
+// }
+
+async function addDepartment(){
+    const newDept = await
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "dept_name",
+            message: "What is the name of the department you would like to create?"
+        }
+    ]);
+    console.log(newDept);
+    await database.createDept(newDept)
 }
-
 async function addEmployee(){
 
 
@@ -167,9 +204,8 @@ let roles = await database.findAllRoles();
             name: "role_id",
             message: "What is the employee's role ID number ?",
         },
-
     ]);
-   
+
 const newemployee =  {...newemployeeName,... newRoleID}
 
 

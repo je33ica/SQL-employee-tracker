@@ -26,21 +26,30 @@ class databaseQueries {
            // console.table("these are the employees", result);
     };
 
-    //find all managers
-    findAllMgrs(employeeId){
-        return this.connection.query(
-           
-        );
+    // //find all managers
+    // findAllMgrs(employeeId){
+    //     return this.connection.query(
+    //         "SELECT id, first_name, last_name FROM employee WHERE id != ?",
+    //         employeeId
+    //     );
+    // }
+
+    // findEmployeeMgr(managerId) {
+    //     return this.connection.query(
+    //         "SELECT employee.id, employee.first_name, employee.last_name, department.name AS department, role.title FROM employee LEFT JOIN role on role.id = employee.role_id LEFT JOIN department ON department.id = role.department_id WHERE manager_id = ?;",
+    //         managerId
+    //     );
+    // }
+
+      //create dept
+      createDept(newDept){
+        return this.connection.query("INSERT INTO department SET ?", newDept);
     }
 
     createEmployee(newemployee){
         return this.connection.query(
             "INSERT INTO employee SET ?",newemployee
-            // {
-            //     first_name: newemployeeName.first,
-            //     last_name : newemployeeName.last,
-            //     role_id: newRoleID
-            // }
+            
             );
     }
 
