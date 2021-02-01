@@ -18,7 +18,15 @@
           
 
    ## Description:
-   A CLI to manage a companys employees using Node, enquirer and MySql.
+   A CLI to manage a companys employees using Node, enquirer and MySql. A command-line application that at a minimum allows the user to:
+
+Add departments, roles, employees
+
+View departments, roles, employees
+
+Update employee roles
+
+
 
    ## Installation:
    npm install
