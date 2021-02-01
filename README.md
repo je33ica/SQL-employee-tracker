@@ -33,7 +33,7 @@
    je33ica 
    [GitHub](https://github.com/je33ica)
 
-   ## language used:
+  ![mysql employee](https://user-images.githubusercontent.com/67834752/106449372-d0193500-647b-11eb-8d4e-9b53c9f24c92.gif)
     
 
    ## Questions:
