@@ -29,7 +29,12 @@ Update employee roles
 
 
    ## Installation:
-   npm install
+* npm install 
+    - This installs all required packages from the package.json
+* run schema.sql and seed.sql
+    - Before running 'node index.js', create the database through the provided schema.sql and seed.sql files
+* node index.js
+    - Running this command starts the CLI in the terminal
 
 
    ## The following license has been used:
