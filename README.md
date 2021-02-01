@@ -28,6 +28,9 @@
 
    ## Contribute:
    just me!
+   
+   [mysql gif.zip](https://github.com/je33ica/SQL-employee-tracker/files/5903537/mysql.gif.zip)
+
 
    ## Github:
    je33ica 
