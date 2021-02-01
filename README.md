@@ -3,7 +3,7 @@
    [![License Badge](https://img.shields.io/static/v1?label=License&message=Unlicense&color=blue)]
     
 # Author: Jessica
-![mysql employee tracker](https://user-images.githubusercontent.com/67834752/106451080-f0e28a00-647d-11eb-9e62-688535fcd25f.gif)
+
 
  ## Table of Contents
    *[Description](#description)
@@ -30,8 +30,7 @@
    ## Contribute:
    just me!
    
-   [mysql gif.zip](https://github.com/je33ica/SQL-employee-tracker/files/5903537/mysql.gif.zip)
-
+ ![mysql employee tracker](https://user-images.githubusercontent.com/67834752/106451080-f0e28a00-647d-11eb-9e62-688535fcd25f.gif)
 
    ## Github:
    je33ica 
